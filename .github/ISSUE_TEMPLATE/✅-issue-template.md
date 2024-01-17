@@ -13,9 +13,9 @@ assignees: ''
 
 ## 📝 상세 내용
 
--[] todo
--[] todo
--[] todo
+- [ ] todo
+- [ ] todo
+- [ ] todo
 
 <br>
 
