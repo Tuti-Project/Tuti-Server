@@ -18,8 +18,6 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String loginId;
-
     @Embedded
     private Email email;
 
@@ -29,19 +27,20 @@ public class Member {
     @Embedded
     private Profile profile;
 
+    private String password;
     private String name;
     private String birthYear;
     private String birthDay;
 
     @Builder
-    public Member(String loginId, Email email, Gender gender, String name, String birthYear, String birthDay, Profile profile) {
-        this.loginId = loginId;
+    public Member(Email email, Gender gender, String password, String name, String birthYear, String birthDay) {
         this.email = email;
         this.gender = gender;
+        this.password = password;
         this.name = name;
         this.birthYear = birthYear;
         this.birthDay = birthDay;
-        this.profile = profile;
+        this.profile = Profile.create();
     }
 
 }
