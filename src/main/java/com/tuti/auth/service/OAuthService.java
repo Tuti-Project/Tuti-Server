@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -26,6 +27,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class OAuthService {
     private final InMemoryProviderRepository inMemoryProviderRepository;
     private final MemberRepository memberRepository;
@@ -33,6 +35,7 @@ public class OAuthService {
 
     private static final String GRANT_TYPE = "authorization_code";
 
+    @Transactional
     public AccessTokenResponse oAuthLogin(String providerName, String code) {
         OAuthProvider provider = inMemoryProviderRepository.findByProviderName(providerName);
 
