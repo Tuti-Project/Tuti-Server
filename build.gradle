@@ -16,9 +16,10 @@ repositories {
 }
 
 dependencies {
-	// Spring Web, Data JPA, WebFlux
+	// Spring Web, Data JPA, WebFlux, Validation
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
 	// jwt
@@ -30,6 +31,9 @@ dependencies {
 
 	// H2
 	runtimeOnly 'com.h2database:h2'
+
+	// Swagger
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
