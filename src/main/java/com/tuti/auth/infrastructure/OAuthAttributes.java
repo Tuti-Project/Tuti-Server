@@ -16,7 +16,6 @@ public enum OAuthAttributes {
                     .name((String) account.get("name"))
                     .email((String) account.get("email"))
                     .gender((String) account.get("gender"))
-                    .phoneNumber(((String) account.get("phone_number")).replace("+82 ", "0"))
                     .birthYear((String) account.get("birthyear"))
                     .birthDay((String) account.get("birthday"))
                     .build();
@@ -30,7 +29,6 @@ public enum OAuthAttributes {
                     .email((String) response.get("email"))
                     .name((String) response.get("name"))
                     .gender((String) response.get("gender"))
-                    .phoneNumber((String) response.get("mobile"))
                     .birthYear((String) response.get("birthyear"))
                     .birthDay(((String) response.get("birthday")).replace("-",""))
                     .build();
