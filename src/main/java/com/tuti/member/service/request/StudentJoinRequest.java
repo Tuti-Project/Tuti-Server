@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Getter
-public class JoinRequest {
+public class StudentJoinRequest {
     @Email
     private String email;
 
@@ -29,6 +29,4 @@ public class JoinRequest {
 
     @NotBlank
     private String gender;
-
-    private String businessNumber;
 }
