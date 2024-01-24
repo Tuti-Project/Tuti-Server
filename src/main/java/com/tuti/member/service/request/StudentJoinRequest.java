@@ -29,4 +29,6 @@ public class JoinRequest {
 
     @NotBlank
     private String gender;
+
+    private String businessNumber;
 }
