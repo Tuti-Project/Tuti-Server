@@ -10,4 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 public class ProfileRequest {
+    private String major;
+    private String university;
+    private String region;
+    private String imageUrl;
 }
