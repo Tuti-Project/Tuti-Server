@@ -1,6 +1,7 @@
 package com.tuti.auth.service.response;
 
 import com.tuti.member.domain.Member;
+import com.tuti.member.domain.vo.ApplyMatchingStatus;
 import com.tuti.member.domain.vo.Email;
 import com.tuti.member.domain.vo.Gender;
 import com.tuti.member.domain.vo.Role;
@@ -39,6 +40,7 @@ public class OAuthUserProfile {
                 .birthYear(birthYear)
                 .birthDay(birthDay)
                 .role(Role.STUDENT)
+                .applyMatchingStatus(ApplyMatchingStatus.ON)
                 .build();
     }
 
