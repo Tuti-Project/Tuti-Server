@@ -1,6 +1,6 @@
 package com.tuti.member.domain.vo;
 
-import com.tuti.member.service.request.ProfileRequest;
+import com.tuti.member.service.request.UpdateMyPageRequest;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -17,32 +17,32 @@ public class Profile {
 
     private String major;
 
-    private String region;
-
     private String imageUrl;
 
+    private String description;
+
     @Builder
-    public Profile(String university, String major, String region, String imageUrl) {
+    public Profile(String university, String major, String imageUrl, String description) {
         this.university = university;
         this.major = major;
-        this.region = region;
         this.imageUrl = imageUrl;
+        this.description = description;
     }
 
     public static Profile create() {
         return Profile.builder()
                 .major(BLANK)
                 .university(BLANK)
-                .region(BLANK)
                 .imageUrl(BLANK)
+                .description(BLANK)
                 .build();
     }
 
-    public void update(ProfileRequest profileRequest) {
-        this.university = profileRequest.getUniversity();
-        this.major = profileRequest.getMajor();
-        this.region = profileRequest.getRegion();
-        this.imageUrl = profileRequest.getImageUrl();
+    public void update(UpdateMyPageRequest updateMyPageRequest) {
+        this.university = updateMyPageRequest.getUniversity();
+        this.major = updateMyPageRequest.getMajor();
+        this.imageUrl = updateMyPageRequest.getImageUrl();
+        this.description = updateMyPageRequest.getDescription();
     }
 
 }

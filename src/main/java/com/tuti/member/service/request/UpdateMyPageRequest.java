@@ -12,9 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Getter
-public class MyPageUpdateRequest {
+public class UpdateMyPageRequest {
     private String university;
     private String major;
+    private String imageUrl;
     private List<String> jobTags;
     private List<String> skillTags;
     private String description;

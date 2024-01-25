@@ -2,14 +2,11 @@ package com.tuti.member.service;
 
 import com.tuti.member.domain.Member;
 import com.tuti.member.domain.repository.MemberRepository;
-import com.tuti.member.domain.vo.Email;
-import com.tuti.member.domain.vo.Gender;
-import com.tuti.member.domain.vo.Profile;
-import com.tuti.member.domain.vo.Role;
+import com.tuti.member.domain.vo.*;
 import com.tuti.member.service.exception.MemberNotFoundException;
 import com.tuti.member.service.request.EnterpriseJoinRequest;
+import com.tuti.member.service.request.UpdateMyPageRequest;
 import com.tuti.member.service.request.StudentJoinRequest;
-import com.tuti.member.service.request.ProfileRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +27,7 @@ public class MemberService {
                 .birthDay(studentJoinRequest.getBirthDay())
                 .gender(Gender.of(studentJoinRequest.getGender()))
                 .role(Role.STUDENT)
+                .applyMatchingStatus(ApplyMatchingStatus.ON)
                 .build();
 
         memberRepository.save(member);
@@ -44,16 +42,17 @@ public class MemberService {
                 .birthDay(enterpriseJoinRequest.getBirthDay())
                 .gender(Gender.of(enterpriseJoinRequest.getGender()))
                 .role(Role.ENTERPRISE)
+                .applyMatchingStatus(ApplyMatchingStatus.OFF)
                 .businessNumber(enterpriseJoinRequest.getBusinessNumber())
                 .build();
 
         memberRepository.save(member);
     }
 
-    public void updateMyPage(Long memberId, ProfileRequest profileRequest) {
-        Profile profile = memberRepository.findById(memberId)
-                .orElseThrow(MemberNotFoundException::new).getProfile();
+    public void updateMyPage(Long memberId, UpdateMyPageRequest updateMyPageRequest) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(MemberNotFoundException::new);
 
-        profile.update(profileRequest);
+        member.update(updateMyPageRequest);
     }
 }

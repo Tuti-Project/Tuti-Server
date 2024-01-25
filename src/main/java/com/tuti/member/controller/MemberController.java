@@ -4,14 +4,13 @@ import com.tuti.auth.config.AuthenticatedMemberId;
 import com.tuti.common.advice.response.ApiResponse;
 import com.tuti.member.service.MemberService;
 import com.tuti.member.service.request.EnterpriseJoinRequest;
+import com.tuti.member.service.request.UpdateMyPageRequest;
 import com.tuti.member.service.request.StudentJoinRequest;
-import com.tuti.member.service.request.ProfileRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,10 +34,11 @@ public class MemberController {
         return ApiResponse.ok();
     }
 
-    @Operation(summary = "프로필 수정", description = "프로필 정보를 수정한다")
-    @PatchMapping("/myProfile")
-    public ApiResponse<Void> getProfile(@Parameter(hidden = true) @AuthenticatedMemberId Long memberId, ProfileRequest profileRequest) {
-        memberService.updateMyPage(memberId, profileRequest);
+    @Operation(summary = "마이페이지 수정", description = "마이페이지 정보를 수정한다")
+    @PatchMapping("/my-page")
+    public ApiResponse<Void> updateMyPage(@Parameter(hidden = true) @AuthenticatedMemberId Long memberId,
+                                          @RequestBody UpdateMyPageRequest updateMyPageRequest) {
+        memberService.updateMyPage(memberId, updateMyPageRequest);
         return ApiResponse.ok();
     }
 }
