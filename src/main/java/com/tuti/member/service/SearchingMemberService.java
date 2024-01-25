@@ -3,6 +3,7 @@ package com.tuti.member.service;
 import com.tuti.member.domain.Member;
 import com.tuti.member.domain.repository.MemberRepository;
 import com.tuti.member.domain.vo.Profile;
+import com.tuti.member.service.exception.MemberNotFoundException;
 import com.tuti.member.service.response.MembersResponse;
 import com.tuti.member.service.response.ProfileResponse;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class SearchingMemberService {
 
     public ProfileResponse getProfile(Long memberId) {
         Profile profile = memberRepository.findById(memberId)
-                .orElseThrow(IllegalArgumentException::new).getProfile();
+                .orElseThrow(MemberNotFoundException::new).getProfile();
 
         return new ProfileResponse(profile);
     }

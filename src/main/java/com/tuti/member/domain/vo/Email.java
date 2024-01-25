@@ -1,5 +1,6 @@
 package com.tuti.member.domain.vo;
 
+import com.tuti.member.domain.exception.InvalidEmailException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -26,15 +27,12 @@ public class Email {
     }
 
     private void validate(String value) {
-        if (Objects.isNull(value)) {
-            throw new NullPointerException("이메일은 null일 수 없습니다.");
+        if (Objects.isNull(value) || !isValidFormat(value)) {
+            throw new InvalidEmailException();
         }
-        isFormatValid(value);
     }
 
-    private void isFormatValid(String value) {
-        if (!value.matches(EMAIL_REGEX)) {
-            throw new IllegalArgumentException("올바르지 않은 이메일 형식입니다.");
-        }
+    private boolean isValidFormat(String value) {
+        return value.matches(EMAIL_REGEX);
     }
 }

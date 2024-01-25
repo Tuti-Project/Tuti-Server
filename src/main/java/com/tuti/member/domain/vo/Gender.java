@@ -1,10 +1,12 @@
 package com.tuti.member.domain.vo;
 
+import com.tuti.member.domain.exception.InvalidGenderException;
+
 import java.util.Arrays;
 import java.util.List;
 
 public enum Gender {
-    FEMALE(List.of("female, F")), MALE(List.of("male", "M"));
+    FEMALE(List.of("female", "F")), MALE(List.of("male", "M"));
 
     private final List<String> names;
 
@@ -16,7 +18,7 @@ public enum Gender {
         return Arrays.stream(Gender.values())
                 .filter(gender -> gender.names.contains(value))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(InvalidGenderException::new);
     }
 
 }

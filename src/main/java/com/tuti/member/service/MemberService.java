@@ -6,6 +6,7 @@ import com.tuti.member.domain.vo.Email;
 import com.tuti.member.domain.vo.Gender;
 import com.tuti.member.domain.vo.Profile;
 import com.tuti.member.domain.vo.Role;
+import com.tuti.member.service.exception.MemberNotFoundException;
 import com.tuti.member.service.request.EnterpriseJoinRequest;
 import com.tuti.member.service.request.StudentJoinRequest;
 import com.tuti.member.service.request.ProfileRequest;
@@ -20,7 +21,6 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    @Transactional
     public void joinStudent(StudentJoinRequest studentJoinRequest) {
         Member member = Member.builder()
                 .email(new Email(studentJoinRequest.getEmail()))
@@ -35,7 +35,6 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    @Transactional
     public void joinEnterprise(EnterpriseJoinRequest enterpriseJoinRequest) {
         Member member = Member.builder()
                 .email(new Email(enterpriseJoinRequest.getEmail()))
@@ -51,10 +50,9 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    @Transactional
-    public void updateProfile(Long memberId, ProfileRequest profileRequest) {
+    public void updateMyPage(Long memberId, ProfileRequest profileRequest) {
         Profile profile = memberRepository.findById(memberId)
-                .orElseThrow(IllegalArgumentException::new).getProfile();
+                .orElseThrow(MemberNotFoundException::new).getProfile();
 
         profile.update(profileRequest);
     }

@@ -1,8 +1,8 @@
 package com.tuti.member.controller;
 
 import com.tuti.auth.config.AuthenticatedMemberId;
+import com.tuti.common.advice.response.ApiResponse;
 import com.tuti.member.service.SearchingMemberService;
-import com.tuti.member.service.request.ProfileRequest;
 import com.tuti.member.service.response.MembersResponse;
 import com.tuti.member.service.response.ProfileResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,14 +23,19 @@ public class SearchingMemberController {
 
     @Operation(summary = "메인 페이지", description = "회원 프로필을 리스트업")
     @GetMapping("/home")
-    public ResponseEntity<MembersResponse> listUpMember(@RequestParam(value = "page", defaultValue = "0") int page) {
-        System.out.println(page);
-        return ResponseEntity.ok(searchingMemberService.getMembers(page));
+    public ApiResponse<MembersResponse> listUpMember(@RequestParam(value = "page", defaultValue = "0") int page) {
+        return ApiResponse.ok(searchingMemberService.getMembers(page));
     }
 
-    @Operation(summary = "프로필 정보", description = "프로필 정보를 가져온다")
-    @GetMapping("/myProfile")
-    public ResponseEntity<ProfileResponse> getProfile(@Parameter(hidden = true) @AuthenticatedMemberId Long memberId) {
-        return ResponseEntity.ok(searchingMemberService.getProfile(memberId));
+    @Operation(summary = "마이페이지 정보", description = "마이페이지 정보를 가져온다")
+    @GetMapping("/mypage")
+    public ApiResponse<ProfileResponse> getMyPage(@Parameter(hidden = true) @AuthenticatedMemberId Long memberId) {
+        return ApiResponse.ok(searchingMemberService.getProfile(memberId));
     }
+
+    @GetMapping("/tt")
+    public ApiResponse<ProfileResponse> asdasd() {
+        return ApiResponse.ok(new ProfileResponse("1","1","1"));
+    }
+
 }
