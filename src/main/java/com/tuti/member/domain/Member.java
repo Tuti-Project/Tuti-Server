@@ -1,5 +1,6 @@
 package com.tuti.member.domain;
 
+import com.tuti.common.entity.BaseEntity;
 import com.tuti.member.domain.vo.Email;
 import com.tuti.member.domain.vo.Gender;
 import com.tuti.member.domain.vo.Profile;
@@ -13,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
