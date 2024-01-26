@@ -38,11 +38,14 @@ public class Member extends BaseEntity {
     @Embedded
     private AttachedSkillTags attachedSkillTags;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     private String password;
     private String name;
     private String birthYear;
     private String birthDay;
-    private Role role;
+
     private String businessNumber;
 
     @Builder
