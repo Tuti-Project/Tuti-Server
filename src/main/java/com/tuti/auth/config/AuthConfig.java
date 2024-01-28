@@ -6,6 +6,7 @@ import com.tuti.auth.infrastructure.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,7 +18,6 @@ public class AuthConfig implements WebMvcConfigurer {
 
     private final AuthenticatedMemberResolver authenticatedMemberResolver;
     private final AuthenticationInterceptor authenticationInterceptor;
-    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> resolvers) {
@@ -25,12 +25,16 @@ public class AuthConfig implements WebMvcConfigurer {
     }
 
     @Override
+    public void addCorsMappings(final CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("/**")
+                .allowCredentials(true)
+                .allowedHeaders("*")
+                .allowedMethods("*");
+    }
+
+    @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(authenticationInterceptor)
-                .order(1)
-                .excludePathPatterns("/api/auth/**/login")
-                .excludePathPatterns("/api/auth/code/google")
-                .excludePathPatterns("/api/token/reissue")
-                .addPathPatterns("/test");
+                .order(1);
     }
 }
