@@ -18,6 +18,7 @@ public class AuthConfig implements WebMvcConfigurer {
 
     private final AuthenticatedMemberResolver authenticatedMemberResolver;
     private final AuthenticationInterceptor authenticationInterceptor;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> resolvers) {
@@ -35,6 +36,7 @@ public class AuthConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(authenticationInterceptor)
-                .order(1);
+                .order(1)
+                .addPathPatterns("test");
     }
 }

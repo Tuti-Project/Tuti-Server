@@ -8,15 +8,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
-
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EqualsAndHashCode
 public class Email {
 
-    private static final String EMAIL_REGEX = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
+    private static final String EMAIL_REGEX = "^[a-zA-Z0-9+-\\_.]+@{1}[a-zA-Z0-9-]+\\.[a-zA-Z0-9]+$";
 
     @Column(name = "email", unique = true, nullable = false)
     private String value;
@@ -27,7 +25,7 @@ public class Email {
     }
 
     private void validate(String value) {
-        if (Objects.isNull(value) || !isValidFormat(value)) {
+        if (!isValidFormat(value)) {
             throw new InvalidEmailException();
         }
     }
