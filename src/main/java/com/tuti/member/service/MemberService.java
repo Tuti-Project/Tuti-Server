@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.tuti.member.domain.vo.Profile.BLANK;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -27,7 +29,11 @@ public class MemberService {
                 .birthDay(studentJoinRequest.getBirthDay())
                 .gender(Gender.of(studentJoinRequest.getGender()))
                 .role(Role.STUDENT)
+                .profile(Profile.create())
                 .applyMatchingStatus(ApplyMatchingStatus.ON)
+                .matchingDescription(BLANK)
+                .availableHours(BLANK)
+                .businessNumber(BLANK)
                 .build();
 
         memberRepository.save(member);
@@ -43,6 +49,8 @@ public class MemberService {
                 .gender(Gender.of(enterpriseJoinRequest.getGender()))
                 .role(Role.ENTERPRISE)
                 .applyMatchingStatus(ApplyMatchingStatus.OFF)
+                .matchingDescription(BLANK)
+                .availableHours(BLANK)
                 .businessNumber(enterpriseJoinRequest.getBusinessNumber())
                 .build();
 

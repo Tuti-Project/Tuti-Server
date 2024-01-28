@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,6 +29,7 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private ApplyMatchingStatus applyMatchingStatus;
+    private String matchingDescription;
 
     @Embedded
     private Profile profile;
@@ -41,6 +43,10 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Embedded
+    private AvailableDays availableDays;
+    private String availableHours;
+
     private String password;
     private String name;
     private String birthYear;
@@ -49,28 +55,38 @@ public class Member extends BaseEntity {
     private String businessNumber;
 
     @Builder
-    public Member(Email email, Gender gender, String password, String name, String birthYear, String birthDay, Role role, String businessNumber, ApplyMatchingStatus applyMatchingStatus) {
+    public Member(Email email, Gender gender, ApplyMatchingStatus applyMatchingStatus, String matchingDescription, Profile profile, AttachedJobTags attachedJobTags, AttachedSkillTags attachedSkillTags, Role role, AvailableDays availableDays, String availableHours, String password, String name, String birthYear, String birthDay, String businessNumber) {
         this.email = email;
         this.gender = gender;
         this.applyMatchingStatus = applyMatchingStatus;
-        this.profile = Profile.create();
+        this.matchingDescription = matchingDescription;
+        this.profile = profile;
+        this.attachedJobTags = attachedJobTags;
+        this.attachedSkillTags = attachedSkillTags;
+        this.role = role;
+        this.availableDays = availableDays;
+        this.availableHours = availableHours;
         this.password = password;
         this.name = name;
         this.birthYear = birthYear;
         this.birthDay = birthDay;
-        this.role = role;
         this.businessNumber = businessNumber;
     }
 
     public void update(UpdateMyPageRequest updateMyPageRequest) {
         profile.update(updateMyPageRequest);
         this.applyMatchingStatus = updateMyPageRequest.getApplyMatchingStatus();
+        this.matchingDescription = updateMyPageRequest.getMatchingDescription();
+        this.availableHours = updateMyPageRequest.getAvailableHours();
         this.attachedJobTags = new AttachedJobTags(updateMyPageRequest.getJobTags().stream()
                 .map(AttachedJobTag::new)
                 .collect(Collectors.toList()));
         this.attachedSkillTags = new AttachedSkillTags(updateMyPageRequest.getSkillTags().stream()
                 .map(AttachedSkillTag::new)
                 .collect(Collectors.toList()));
+        this.availableDays = new AvailableDays(updateMyPageRequest.getAvailableDays().stream()
+                .map(DayOfWeek::of)
+                .collect(Collectors.toSet()));
     }
 
 }

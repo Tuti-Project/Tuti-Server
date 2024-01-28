@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @Builder
 @Getter
 public class MemberDetailResponse {
-
     private static final String WOMEN = "여자";
     private static final String MEN = "남자";
 
@@ -30,6 +29,9 @@ public class MemberDetailResponse {
     private List<String> jobTags;
     private List<String> skillTags;
     private ApplyMatchingStatus applyMatchingStatus;
+    private String matchingDescription;
+    private List<String> availableDays;
+    private String availableHours;
 
     public MemberDetailResponse(Member member) {
         Profile profile = member.getProfile();
@@ -43,7 +45,9 @@ public class MemberDetailResponse {
         this.applyMatchingStatus = member.getApplyMatchingStatus();
         this.jobTags = member.getAttachedJobTags().get().stream().map(AttachedJobTag::getJobTagName).collect(Collectors.toList());
         this.skillTags = member.getAttachedSkillTags().get().stream().map(AttachedSkillTag::getSkillTagName).collect(Collectors.toList());
-
+        this.matchingDescription = member.getMatchingDescription();
+        this.availableDays = member.getAvailableDays().get().stream().map(DayOfWeek::getDayName).collect(Collectors.toList());
+        this.availableHours = member.getAvailableHours();
     }
 
     private String genderToString(Gender gender) {

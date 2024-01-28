@@ -20,4 +20,7 @@ public class UpdateMyPageRequest {
     private List<String> skillTags;
     private String description;
     private ApplyMatchingStatus applyMatchingStatus;
+    private String matchingDescription;
+    private List<String> availableDays;
+    private String availableHours;
 }
