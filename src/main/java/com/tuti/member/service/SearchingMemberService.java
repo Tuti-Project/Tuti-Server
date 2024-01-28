@@ -3,8 +3,8 @@ package com.tuti.member.service;
 import com.tuti.member.domain.Member;
 import com.tuti.member.domain.repository.MemberRepository;
 import com.tuti.member.service.exception.MemberNotFoundException;
+import com.tuti.member.service.response.MemberDetailResponse;
 import com.tuti.member.service.response.MembersResponse;
-import com.tuti.member.service.response.MyPageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -26,10 +26,11 @@ public class SearchingMemberService {
                 .build();
     }
 
-    public MyPageResponse getMyPage(Long memberId) {
+
+    public MemberDetailResponse getMember(Long memberId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(MemberNotFoundException::new);
 
-        return new MyPageResponse(member);
+        return new MemberDetailResponse(member);
     }
 }

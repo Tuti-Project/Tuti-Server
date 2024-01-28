@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 @Getter
-public class MemberResponse {
+public class MemberSimpleResponse {
+    private Long memberId;
     private String name;
     private String university;
     private String major;
@@ -24,8 +25,9 @@ public class MemberResponse {
     private ApplyMatchingStatus applyMatchingStatus;
     private List<String> jobTags;
 
-    public MemberResponse(Member member) {
+    public MemberSimpleResponse(Member member) {
         Profile profile = member.getProfile();
+        this.memberId = member.getId();
         this.name = member.getName();
         this.university = profile.getUniversity();
         this.major = profile.getMajor();

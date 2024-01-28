@@ -15,10 +15,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 @Getter
-public class MyPageResponse {
+public class MemberDetailResponse {
+
     private static final String WOMEN = "여자";
     private static final String MEN = "남자";
 
+    private Long memberId;
     private String name;
     private int age;
     private String gender;
@@ -29,8 +31,9 @@ public class MyPageResponse {
     private List<String> skillTags;
     private ApplyMatchingStatus applyMatchingStatus;
 
-    public MyPageResponse(Member member) {
+    public MemberDetailResponse(Member member) {
         Profile profile = member.getProfile();
+        this.memberId = member.getId();
         this.name = member.getName();
         this.age = LocalDate.now().getYear() - Integer.parseInt(member.getBirthYear()) + 1;
         this.gender = genderToString(member.getGender());
@@ -40,10 +43,10 @@ public class MyPageResponse {
         this.applyMatchingStatus = member.getApplyMatchingStatus();
         this.jobTags = member.getAttachedJobTags().get().stream().map(AttachedJobTag::getJobTagName).collect(Collectors.toList());
         this.skillTags = member.getAttachedSkillTags().get().stream().map(AttachedSkillTag::getSkillTagName).collect(Collectors.toList());
+
     }
 
     private String genderToString(Gender gender) {
         return (gender.equals(Gender.FEMALE)) ? WOMEN : MEN;
     }
-
 }

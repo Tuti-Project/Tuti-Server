@@ -3,8 +3,8 @@ package com.tuti.member.controller;
 import com.tuti.auth.config.AuthenticatedMemberId;
 import com.tuti.common.advice.response.ApiResponse;
 import com.tuti.member.service.SearchingMemberService;
+import com.tuti.member.service.response.MemberDetailResponse;
 import com.tuti.member.service.response.MembersResponse;
-import com.tuti.member.service.response.MyPageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,8 +28,14 @@ public class SearchingMemberController {
 
     @Operation(summary = "마이페이지 정보", description = "마이페이지 정보를 가져온다")
     @GetMapping("/my-page")
-    public ApiResponse<MyPageResponse> getMyPage(@Parameter(hidden = true) @AuthenticatedMemberId Long memberId) {
-        return ApiResponse.ok(searchingMemberService.getMyPage(memberId));
+    public ApiResponse<MemberDetailResponse> getMyPage(@Parameter(hidden = true) @AuthenticatedMemberId Long memberId) {
+        return ApiResponse.ok(searchingMemberService.getMember(memberId));
+    }
+
+    @Operation(summary = "유저 상세 페이지", description = "유저 상세 페이지 정보를 가져온다")
+    @GetMapping("/member/{memberId}")
+    public ApiResponse<MemberDetailResponse> getMember(@RequestParam("memberId") Long memberId) {
+        return ApiResponse.ok(searchingMemberService.getMember(memberId));
     }
 
 }
