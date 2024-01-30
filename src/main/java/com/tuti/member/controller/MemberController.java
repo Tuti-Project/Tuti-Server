@@ -35,7 +35,7 @@ public class MemberController {
     }
 
     @Operation(summary = "마이페이지 수정", description = "마이페이지 정보를 수정한다")
-    @PatchMapping("/my-page")
+    @PutMapping("/my-page")
     public ApiResponse<Void> updateMyPage(@Parameter(hidden = true) @AuthenticatedMemberId Long memberId,
                                           @RequestBody UpdateMyPageRequest updateMyPageRequest) {
         memberService.updateMyPage(memberId, updateMyPageRequest);
