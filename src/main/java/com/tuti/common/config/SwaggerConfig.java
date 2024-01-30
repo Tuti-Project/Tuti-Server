@@ -2,6 +2,7 @@ package com.tuti.common.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
@@ -13,7 +14,9 @@ import java.util.Arrays;
 
 @OpenAPIDefinition(
         info = @Info(title = "트티 API 명세서",
-                version = "v1"))
+                version = "v1"),
+        servers = {@Server(url = "https://www.tuti-service.site/", description = "Dev"),
+                   @Server(url = "http://localhost:8080/", description = "Local")})
 @Configuration
 public class SwaggerConfig {
 
