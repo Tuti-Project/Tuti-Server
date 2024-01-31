@@ -12,6 +12,8 @@ import lombok.ToString;
 
 import java.util.UUID;
 
+import static com.tuti.member.domain.vo.Profile.BLANK;
+
 @Getter
 @NoArgsConstructor
 @ToString
@@ -40,7 +42,9 @@ public class OAuthUserProfile {
                 .birthYear(birthYear)
                 .birthDay(birthDay)
                 .role(Role.STUDENT)
-                .applyMatchingStatus(ApplyMatchingStatus.ON)
+                .applyMatchingStatus(ApplyMatchingStatus.OFF)
+                .matchingDescription(BLANK)
+                .availableHours(BLANK)
                 .build();
     }
 
