@@ -1,10 +1,7 @@
 package com.tuti.auth.service.response;
 
 import com.tuti.member.domain.Member;
-import com.tuti.member.domain.vo.ApplyMatchingStatus;
-import com.tuti.member.domain.vo.Email;
-import com.tuti.member.domain.vo.Gender;
-import com.tuti.member.domain.vo.Role;
+import com.tuti.member.domain.vo.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,6 +39,7 @@ public class OAuthUserProfile {
                 .birthYear(birthYear)
                 .birthDay(birthDay)
                 .role(Role.STUDENT)
+                .profile(Profile.create())
                 .applyMatchingStatus(ApplyMatchingStatus.OFF)
                 .matchingDescription(BLANK)
                 .availableHours(BLANK)
