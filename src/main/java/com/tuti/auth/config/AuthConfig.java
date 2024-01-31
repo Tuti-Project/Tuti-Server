@@ -27,12 +27,13 @@ public class AuthConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(final CorsRegistry registry) {
-        registry.addMapping("/**").allowedOriginPatterns("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowedHeaders("Authorization", "Content-Type")
-                .exposedHeaders("Custom-Header")
+        registry.addMapping("/**")
+                .allowedOriginPatterns("*")
+                .allowedHeaders("*")
+                .allowedMethods("GET", "POST", "PATCH", "PUT", "DELETE")
                 .allowCredentials(true);
     }
+
 
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
