@@ -4,6 +4,7 @@ import com.tuti.auth.config.oauth.InMemoryProviderRepository;
 import com.tuti.auth.infrastructure.JwtTokenProvider;
 import com.tuti.auth.infrastructure.OAuthAttributes;
 import com.tuti.auth.infrastructure.OAuthProvider;
+import com.tuti.auth.service.exception.InvalidEmailOrPasswordException;
 import com.tuti.auth.service.request.LoginRequest;
 import com.tuti.auth.service.response.AccessTokenResponse;
 import com.tuti.auth.service.response.OAuthTokenResponse;
@@ -28,7 +29,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class OAuthService {
+public class AuthService {
     private final InMemoryProviderRepository inMemoryProviderRepository;
     private final MemberRepository memberRepository;
     private final JwtTokenProvider tokenProvider;
@@ -49,11 +50,11 @@ public class OAuthService {
     }
 
     public AccessTokenResponse login(LoginRequest loginRequest) {
-        Member member = memberRepository.findByEmail(new Email(loginRequest.getEmail())).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 이메일입니다."));
+        Member member = memberRepository.findByEmail(new Email(loginRequest.getEmail()))
+                .orElseThrow(InvalidEmailOrPasswordException::new);
 
         if (!loginRequest.getPassword().equals(member.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 올바르지 않습니다.");
+            throw new InvalidEmailOrPasswordException();
         }
 
         return new AccessTokenResponse(tokenProvider.createAccessToken(member.getId()));

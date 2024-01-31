@@ -2,6 +2,7 @@ package com.tuti.auth.controller.interceptor;
 
 import com.tuti.auth.config.AuthenticationExtractor;
 import com.tuti.auth.infrastructure.JwtTokenProvider;
+import com.tuti.auth.service.exception.InvalidTokenException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     private void validateToken(final String token) {
         if (token == null || !tokenProvider.validateToken(token)) {
-            throw new IllegalArgumentException(String.format("유효하지 않은 토큰[%s]입니다.", token));
+            throw new InvalidTokenException();
         }
     }
 }

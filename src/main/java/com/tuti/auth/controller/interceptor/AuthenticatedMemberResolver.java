@@ -3,6 +3,7 @@ package com.tuti.auth.controller.interceptor;
 import com.tuti.auth.config.AuthenticatedMemberId;
 import com.tuti.auth.config.AuthenticationExtractor;
 import com.tuti.auth.infrastructure.JwtTokenProvider;
+import com.tuti.auth.service.exception.InvalidTokenException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -30,7 +31,7 @@ public class AuthenticatedMemberResolver implements HandlerMethodArgumentResolve
 
         final String token = AuthenticationExtractor.extract(request);
         if (token == null) {
-            throw new IllegalArgumentException("인증 타입이 올바르지 않습니다.");
+            throw new InvalidTokenException();
         }
         return Long.valueOf(tokenProvider.getPayload(token));
     }
