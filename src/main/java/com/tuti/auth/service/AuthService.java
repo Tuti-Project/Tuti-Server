@@ -7,22 +7,16 @@ import com.tuti.auth.infrastructure.OAuthProvider;
 import com.tuti.auth.service.exception.InvalidEmailOrPasswordException;
 import com.tuti.auth.service.request.LoginRequest;
 import com.tuti.auth.service.response.AccessTokenResponse;
-import com.tuti.auth.service.response.OAuthTokenResponse;
 import com.tuti.auth.service.response.OAuthUserProfile;
 import com.tuti.member.domain.Member;
 import com.tuti.member.domain.repository.MemberRepository;
 import com.tuti.member.domain.vo.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
@@ -34,15 +28,11 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final JwtTokenProvider tokenProvider;
 
-    private static final String GRANT_TYPE = "authorization_code";
-
     @Transactional
-    public AccessTokenResponse oAuthLogin(String providerName, String code) {
+    public AccessTokenResponse oAuthLogin(String providerName, String oAuthAccessToken) {
         OAuthProvider provider = inMemoryProviderRepository.findByProviderName(providerName);
 
-        OAuthTokenResponse tokenResponse = getToken(code, provider);
-
-        OAuthUserProfile oAuthUserProfile = getUserProfile(providerName, tokenResponse, provider);
+        OAuthUserProfile oAuthUserProfile = getUserProfile(providerName, oAuthAccessToken, provider);
 
         Member member = saveOrLogin(oAuthUserProfile);
 
@@ -68,44 +58,19 @@ public class AuthService {
         return member.get();
     }
 
-    private OAuthUserProfile getUserProfile(String providerName, OAuthTokenResponse tokenResponse, OAuthProvider provider) {
-        Map<String, Object> OAuthUserAttributes = getUserAttributes(provider, tokenResponse);
+    private OAuthUserProfile getUserProfile(String providerName, String oAuthAccessToken, OAuthProvider provider) {
+        Map<String, Object> OAuthUserAttributes = getUserAttributes(provider, oAuthAccessToken);
         return OAuthAttributes.extract(providerName, OAuthUserAttributes);
     }
 
-    private Map<String, Object> getUserAttributes(OAuthProvider provider, OAuthTokenResponse tokenResponse) {
+    private Map<String, Object> getUserAttributes(OAuthProvider provider, String oAuthAccessToken) {
         return WebClient.create()
                 .get()
                 .uri(provider.getUserInfoUrl())
-                .headers(header -> header.setBearerAuth(tokenResponse.getAccessToken()))
+                .headers(header -> header.setBearerAuth(oAuthAccessToken))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
                 .block();
-    }
-
-    private OAuthTokenResponse getToken(String code, OAuthProvider provider) {
-        return WebClient.create()
-                .post()
-                .uri(provider.getTokenUrl())
-                .headers(header -> {
-                    header.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-                    header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-                    header.setAcceptCharset(Collections.singletonList(StandardCharsets.UTF_8));
-                })
-                .bodyValue(tokenRequest(code, provider))
-                .retrieve()
-                .bodyToMono(OAuthTokenResponse.class)
-                .block();
-    }
-
-    private MultiValueMap<String, String> tokenRequest(String code, OAuthProvider provider) {
-        MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-        formData.add("code", code);
-        formData.add("grant_type", GRANT_TYPE);
-        formData.add("redirect_uri", provider.getRedirectUrl());
-        formData.add("client_id", provider.getClientId());
-        formData.add("client_secret", provider.getClientSecret());
-        return formData;
     }
 
 }
