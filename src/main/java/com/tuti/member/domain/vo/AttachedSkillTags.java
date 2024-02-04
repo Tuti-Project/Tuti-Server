@@ -10,9 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Embeddable
@@ -22,14 +20,14 @@ public class AttachedSkillTags {
 
     @ElementCollection
     @CollectionTable(name = "member_skill_tag", joinColumns = @JoinColumn(name = "member_id"))
-    private List<AttachedSkillTag> attachedSkillTags = new ArrayList<>();
+    private Set<AttachedSkillTag> attachedSkillTags = new HashSet<>();
 
-    public List<AttachedSkillTag> get() {
-        return new ArrayList<>(attachedSkillTags);
+    public Set<AttachedSkillTag> get() {
+        return new HashSet<>(attachedSkillTags);
     }
 
     public static AttachedSkillTags empty() {
-        return new AttachedSkillTags(List.of());
+        return new AttachedSkillTags(Set.of());
     }
 
     @Override

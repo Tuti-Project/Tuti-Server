@@ -28,9 +28,10 @@ public class SearchingMemberService {
 
 
     public MemberDetailResponse getMember(Long memberId) {
-        Member member = memberRepository.findById(memberId)
+        Member member = memberRepository.findByIdFetch(memberId)
                 .orElseThrow(MemberNotFoundException::new);
 
         return new MemberDetailResponse(member);
     }
+
 }

@@ -9,9 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Embeddable
@@ -21,14 +19,14 @@ public class AttachedJobTags {
 
     @ElementCollection
     @CollectionTable(name = "member_job_tag", joinColumns = @JoinColumn(name = "member_id"))
-    private List<AttachedJobTag> attachedJobTags = new ArrayList<>();
+    private Set<AttachedJobTag> attachedJobTags = new HashSet<>();
 
-    public List<AttachedJobTag> get() {
-        return new ArrayList<>(attachedJobTags);
+    public Set<AttachedJobTag> get() {
+        return new HashSet<>(attachedJobTags);
     }
 
     public static AttachedJobTags empty() {
-        return new AttachedJobTags(List.of());
+        return new AttachedJobTags(Set.of());
     }
 
     @Override

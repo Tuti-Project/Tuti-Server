@@ -8,8 +8,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -80,10 +78,10 @@ public class Member extends BaseEntity {
         this.availableHours = updateMyPageRequest.getAvailableHours();
         this.attachedJobTags = new AttachedJobTags(updateMyPageRequest.getJobTags().stream()
                 .map(AttachedJobTag::new)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
         this.attachedSkillTags = new AttachedSkillTags(updateMyPageRequest.getSkillTags().stream()
                 .map(AttachedSkillTag::new)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
         this.availableDays = new AvailableDays(updateMyPageRequest.getAvailableDays().stream()
                 .map(DayOfWeek::of)
                 .collect(Collectors.toSet()));
