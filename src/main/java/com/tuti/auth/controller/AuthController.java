@@ -18,8 +18,8 @@ public class AuthController {
 
     @Operation(summary = "OAuth 로그인", description = "provider는 kakao 혹은 naver 입력, code는 kakao와 네이버 로그인 API에서 받은 token 값 입력")
     @PostMapping("/login/oauth/{provider}")
-    public ApiResponse<AccessTokenResponse> oAuthLogin(@PathVariable(name = "provider") String provider, @RequestParam("code") String token) {
-        return ApiResponse.ok(authService.oAuthLogin(provider, token));
+    public ApiResponse<AccessTokenResponse> oAuthLogin(@PathVariable(name = "provider") String provider, @RequestParam("code") String code) {
+        return ApiResponse.ok(authService.oAuthLogin(provider, code));
     }
 
     @Operation(summary = "일반 로그인", description = "이메일과 비밀번호를 입력하여 로그인")

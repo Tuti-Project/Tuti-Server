@@ -1,6 +1,5 @@
 package com.tuti.auth.service;
 
-import com.tuti.auth.config.oauth.InMemoryProviderRepository;
 import com.tuti.auth.infrastructure.JwtTokenProvider;
 import com.tuti.auth.infrastructure.OAuthAttributes;
 import com.tuti.auth.infrastructure.OAuthProvider;
@@ -24,15 +23,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class AuthService {
-    private final InMemoryProviderRepository inMemoryProviderRepository;
     private final MemberRepository memberRepository;
     private final JwtTokenProvider tokenProvider;
+    private final OAuthProvider oAuthProvider;
 
     @Transactional
     public AccessTokenResponse oAuthLogin(String providerName, String oAuthAccessToken) {
-        OAuthProvider provider = inMemoryProviderRepository.findByProviderName(providerName);
+        String userInfoUri = oAuthProvider.of(providerName);
 
-        OAuthUserProfile oAuthUserProfile = getUserProfile(providerName, oAuthAccessToken, provider);
+        OAuthUserProfile oAuthUserProfile = getUserProfile(providerName, oAuthAccessToken, userInfoUri);
 
         Member member = saveOrLogin(oAuthUserProfile);
 
@@ -58,15 +57,15 @@ public class AuthService {
         return member.get();
     }
 
-    private OAuthUserProfile getUserProfile(String providerName, String oAuthAccessToken, OAuthProvider provider) {
-        Map<String, Object> OAuthUserAttributes = getUserAttributes(provider, oAuthAccessToken);
+    private OAuthUserProfile getUserProfile(String providerName, String oAuthAccessToken, String userInfoUri) {
+        Map<String, Object> OAuthUserAttributes = getUserAttributes(userInfoUri, oAuthAccessToken);
         return OAuthAttributes.extract(providerName, OAuthUserAttributes);
     }
 
-    private Map<String, Object> getUserAttributes(OAuthProvider provider, String oAuthAccessToken) {
+    private Map<String, Object> getUserAttributes(String userInfoUri, String oAuthAccessToken) {
         return WebClient.create()
                 .get()
-                .uri(provider.getUserInfoUrl())
+                .uri(userInfoUri)
                 .headers(header -> header.setBearerAuth(oAuthAccessToken))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})

@@ -18,7 +18,6 @@ public class AuthConfig implements WebMvcConfigurer {
 
     private final AuthenticatedMemberResolver authenticatedMemberResolver;
     private final AuthenticationInterceptor authenticationInterceptor;
-    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> resolvers) {
