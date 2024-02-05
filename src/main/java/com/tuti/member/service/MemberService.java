@@ -30,9 +30,6 @@ public class MemberService {
                 .gender(Gender.of(studentJoinRequest.getGender()))
                 .role(Role.STUDENT)
                 .profile(Profile.create())
-                .applyMatchingStatus(ApplyMatchingStatus.ON)
-                .matchingDescription(BLANK)
-                .availableHours(BLANK)
                 .businessNumber(BLANK)
                 .build();
 
@@ -48,9 +45,6 @@ public class MemberService {
                 .birthDay(enterpriseJoinRequest.getBirthDay())
                 .gender(Gender.of(enterpriseJoinRequest.getGender()))
                 .role(Role.ENTERPRISE)
-                .applyMatchingStatus(ApplyMatchingStatus.OFF)
-                .matchingDescription(BLANK)
-                .availableHours(BLANK)
                 .businessNumber(enterpriseJoinRequest.getBusinessNumber())
                 .build();
 
@@ -61,6 +55,6 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(MemberNotFoundException::new);
 
-        member.update(updateMyPageRequest);
+        member.updateProfile(updateMyPageRequest);
     }
 }

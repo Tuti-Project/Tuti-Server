@@ -40,9 +40,6 @@ public class OAuthUserProfile {
                 .birthDay(birthDay)
                 .role(Role.STUDENT)
                 .profile(Profile.create())
-                .applyMatchingStatus(ApplyMatchingStatus.OFF)
-                .matchingDescription(BLANK)
-                .availableHours(BLANK)
                 .build();
     }
 

@@ -15,10 +15,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Slice<Member> findSliceBy(Pageable pageable);
 
-    @Query("SELECT m FROM Member m " +
-            "LEFT JOIN FETCH m.attachedJobTags.attachedJobTags " +
-            "LEFT JOIN FETCH m.availableDays.availableDays " +
-            "LEFT JOIN FETCH m.attachedSkillTags.attachedSkillTags " +
+    @Query("SELECT m FROM Member m JOIN FETCH m.profile mp " +
+            "LEFT JOIN FETCH mp.attachedJobTags.attachedJobTags " +
+            "LEFT JOIN FETCH mp.availableDays.availableDays " +
+            "LEFT JOIN FETCH mp.attachedSkillTags.attachedSkillTags " +
             "WHERE m.id = :id")
     Optional<Member> findByIdFetch(@Param("id") Long id);
 

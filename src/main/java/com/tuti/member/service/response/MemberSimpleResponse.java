@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
@@ -23,7 +24,7 @@ public class MemberSimpleResponse {
     private String major;
     private String imageUrl;
     private ApplyMatchingStatus applyMatchingStatus;
-    private List<String> jobTags;
+    private Set<String> jobTags;
 
     public MemberSimpleResponse(Member member) {
         Profile profile = member.getProfile();
@@ -32,7 +33,7 @@ public class MemberSimpleResponse {
         this.university = profile.getUniversity();
         this.major = profile.getMajor();
         this.imageUrl = profile.getImageUrl();
-        this.applyMatchingStatus = member.getApplyMatchingStatus();
-        this.jobTags = member.getAttachedJobTags().get().stream().map(AttachedJobTag::getJobTagName).collect(Collectors.toList());
+        this.applyMatchingStatus = profile.getApplyMatchingStatus();
+        this.jobTags = profile.getAttachedJobTags().get().stream().map(AttachedJobTag::getJobTagName).collect(Collectors.toSet());
     }
 }

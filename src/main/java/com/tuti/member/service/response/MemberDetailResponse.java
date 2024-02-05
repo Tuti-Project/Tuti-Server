@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
@@ -26,11 +27,11 @@ public class MemberDetailResponse {
     private String university;
     private String major;
     private String description;
-    private List<String> jobTags;
-    private List<String> skillTags;
+    private Set<String> jobTags;
+    private Set<String> skillTags;
     private ApplyMatchingStatus applyMatchingStatus;
     private String matchingDescription;
-    private List<String> availableDays;
+    private Set<String> availableDays;
     private String availableHours;
 
     public MemberDetailResponse(Member member) {
@@ -42,12 +43,12 @@ public class MemberDetailResponse {
         this.university = profile.getUniversity();
         this.major = profile.getMajor();
         this.description = profile.getDescription();
-        this.applyMatchingStatus = member.getApplyMatchingStatus();
-        this.jobTags = member.getAttachedJobTags().get().stream().map(AttachedJobTag::getJobTagName).collect(Collectors.toList());
-        this.skillTags = member.getAttachedSkillTags().get().stream().map(AttachedSkillTag::getSkillTagName).collect(Collectors.toList());
-        this.matchingDescription = member.getMatchingDescription();
-        this.availableDays = member.getAvailableDays().get().stream().map(DayOfWeek::getDayName).collect(Collectors.toList());
-        this.availableHours = member.getAvailableHours();
+        this.applyMatchingStatus = profile.getApplyMatchingStatus();
+        this.jobTags = profile.getAttachedJobTags().get().stream().map(AttachedJobTag::getJobTagName).collect(Collectors.toSet());
+        this.skillTags = profile.getAttachedSkillTags().get().stream().map(AttachedSkillTag::getSkillTagName).collect(Collectors.toSet());
+        this.matchingDescription = profile.getMatchingDescription();
+        this.availableDays = profile.getAvailableDays().get().stream().map(DayOfWeek::getDayName).collect(Collectors.toSet());
+        this.availableHours = profile.getAvailableHours();
     }
 
     private String genderToString(Gender gender) {

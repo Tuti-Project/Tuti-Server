@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,11 +16,11 @@ public class UpdateMyPageRequest {
     private String university;
     private String major;
     private String imageUrl;
-    private List<String> jobTags;
-    private List<String> skillTags;
+    private Set<String> jobTags;
+    private Set<String> skillTags;
     private String description;
     private ApplyMatchingStatus applyMatchingStatus;
     private String matchingDescription;
-    private List<String> availableDays;
+    private Set<String> availableDays;
     private String availableHours;
 }
