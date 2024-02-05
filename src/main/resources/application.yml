@@ -1,3 +1,6 @@
+spring:
+  profiles:
+    active: security
 ---
 spring:
   profiles:
@@ -7,3 +10,4 @@ spring:
 spring:
   profiles:
     active: dev
+
