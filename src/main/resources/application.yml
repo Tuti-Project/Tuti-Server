@@ -10,4 +10,6 @@ spring:
 spring:
   profiles:
     active: dev
+    include: security
+
 

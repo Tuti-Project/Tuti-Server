@@ -13,10 +13,12 @@ import java.util.stream.Collectors;
 public class MembersResponse {
     private List<MemberSimpleResponse> members;
     private boolean hasNext;
+    private Long last;
 
     @Builder
-    public MembersResponse(List<Member> members, boolean hasNext) {
+    public MembersResponse(List<Member> members, boolean hasNext, Long last) {
         this.members = members.stream().map(m -> new MemberSimpleResponse(m)).collect(Collectors.toList());
         this.hasNext = hasNext;
+        this.last = last;
     }
 }

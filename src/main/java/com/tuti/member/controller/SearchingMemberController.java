@@ -22,8 +22,8 @@ public class SearchingMemberController {
 
     @Operation(summary = "메인 페이지", description = "회원 프로필을 리스트업")
     @GetMapping("/home")
-    public ApiResponse<MembersResponse> listUpMember(@RequestParam(value = "page", defaultValue = "0") int page) {
-        return ApiResponse.ok(searchingMemberService.getMembers(page));
+    public ApiResponse<MembersResponse> listUpMember(@RequestParam(value = "last", defaultValue = "0") Long lastMemberId) {
+        return ApiResponse.ok(searchingMemberService.getMembers(lastMemberId));
     }
 
     @Operation(summary = "마이페이지 정보", description = "마이페이지 정보를 가져온다")
