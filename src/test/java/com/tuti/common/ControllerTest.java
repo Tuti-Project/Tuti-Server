@@ -1,7 +1,13 @@
 package com.tuti.common;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Optional;
+
 import com.tuti.auth.infrastructure.JwtTokenProvider;
+import com.tuti.auth.infrastructure.OAuthProvider;
 import com.tuti.fixtures.MemberFixtures;
 import com.tuti.member.domain.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,14 +21,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 @WebMvcTest(includeFilters = @Filter(type = FilterType.ANNOTATION, classes = RestController.class))
-@Import({JwtTokenProvider.class})
-public class WebMVCTest {
+@Import({JwtTokenProvider.class, OAuthProvider.class})
+public abstract class WebMVCTest {
 
     @Autowired
     protected MockMvc mockMvc;

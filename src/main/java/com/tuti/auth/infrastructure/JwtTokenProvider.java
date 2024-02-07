@@ -1,5 +1,7 @@
 package com.tuti.auth.infrastructure;
 
+import com.tuti.auth.service.exception.ExpiredTokenException;
+import com.tuti.auth.service.exception.InvalidTokenException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -42,7 +44,7 @@ public class JwtTokenProvider {
         } catch (ExpiredJwtException e) {
             return e.getClaims().getSubject();
         } catch (JwtException e) {
-            throw new RuntimeException("유효하지 않은 토큰입니다.");
+            throw new InvalidTokenException();
         }
     }
 
@@ -58,7 +60,7 @@ public class JwtTokenProvider {
 
     private void validateTokenExpiration(Date tokenExpirationDate) {
         if (tokenExpirationDate.before(new Date())) {
-            throw new IllegalArgumentException("만료된 토큰입니다.");
+            throw new ExpiredTokenException();
         }
     }
 
