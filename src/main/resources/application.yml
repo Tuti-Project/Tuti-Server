@@ -1,15 +1,10 @@
 spring:
   profiles:
-    active: security
----
-spring:
-  profiles:
     active: local
 
 ---
 spring:
   profiles:
     active: dev
-    include: security
 
 
