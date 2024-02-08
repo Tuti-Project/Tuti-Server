@@ -34,8 +34,8 @@ public class SearchingMemberController {
 
     @Operation(summary = "유저 상세 페이지", description = "유저 상세 페이지 정보를 가져온다")
     @GetMapping("/member/{memberId}")
-    public ApiResponse<MemberDetailResponse> getMember(@RequestParam("memberId") Long memberId) {
-        return ApiResponse.ok(searchingMemberService.getMember(memberId));
+    public ApiResponse<MemberDetailResponse> getMember(@AuthenticatedMemberId Long memberId, @RequestParam("memberId") Long findMemberId) {
+        return ApiResponse.ok(searchingMemberService.getMember(findMemberId));
     }
 
 }

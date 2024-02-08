@@ -29,5 +29,6 @@ public class EnterpriseJoinRequest {
     @NotBlank
     private String gender;
 
+    @NotBlank
     private String businessNumber;
 }
