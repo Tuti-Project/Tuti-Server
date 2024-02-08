@@ -22,3 +22,8 @@ fi
 DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
 echo "> DEPLOY_JAR 배포"    >> /home/ubuntu/Tuti-Server/deploy.log
 nohup java -jar $DEPLOY_JAR --spring.profiles.active=dev > /dev/null 2> /dev/null < /dev/null &
+
+nohup java -jar \
+    -Dspring.config.location=classpath:/application.yml,classpath:/application-dev.yml \
+    -Dspring.profiles.active=dev \
+    $DEPLOY_JAR > $DEPLOY_PATH/nohup.out 2>&1 &
