@@ -71,17 +71,17 @@ public class SearchingMemberServiceTest {
     @Test
     void findMembersWithPaging() {
         // when
-        MembersResponse response = searchingMemberService.getMembers(0); // 인자는 페이지 값
+        MembersResponse response = searchingMemberService.getMembers(0L); // 인자는 페이지 값
 
         // then
         assertThat(response.getMembers())
                 .extracting("name", "university", "major", "imageUrl", "jobTags", "applyMatchingStatus")
                 .containsExactly(
-                        tuple(MemberFixtures.정우_이름, ProfileFixtures.정우_대학, ProfileFixtures.정우_전공, ProfileFixtures.정우_이미지_주소, jobTagsToStringSet(ProfileFixtures.정우_직무_태그.get()), ProfileFixtures.정우_매칭_신청_여부),
-                        tuple(MemberFixtures.혜린_이름, ProfileFixtures.혜린_대학, ProfileFixtures.혜린_전공, ProfileFixtures.혜린_이미지_주소, jobTagsToStringSet(ProfileFixtures.혜린_직무_태그.get()), ProfileFixtures.혜린_매칭_신청_여부),
-                        tuple(MemberFixtures.심규_이름, ProfileFixtures.심규_대학, ProfileFixtures.심규_전공, ProfileFixtures.심규_이미지_주소, jobTagsToStringSet(ProfileFixtures.심규_직무_태그.get()), ProfileFixtures.심규_매칭_신청_여부),
+                        tuple(MemberFixtures.창환_이름, ProfileFixtures.창환_대학, ProfileFixtures.창환_전공, ProfileFixtures.창환_이미지_주소, jobTagsToStringSet(ProfileFixtures.창환_직무_태그.get()), ProfileFixtures.창환_매칭_신청_여부),
                         tuple(MemberFixtures.주영_이름, ProfileFixtures.주영_대학, ProfileFixtures.주영_전공, ProfileFixtures.주영_이미지_주소, jobTagsToStringSet(ProfileFixtures.주영_직무_태그.get()), ProfileFixtures.주영_매칭_신청_여부),
-                        tuple(MemberFixtures.창환_이름, ProfileFixtures.창환_대학, ProfileFixtures.창환_전공, ProfileFixtures.창환_이미지_주소, jobTagsToStringSet(ProfileFixtures.창환_직무_태그.get()), ProfileFixtures.창환_매칭_신청_여부)
+                        tuple(MemberFixtures.심규_이름, ProfileFixtures.심규_대학, ProfileFixtures.심규_전공, ProfileFixtures.심규_이미지_주소, jobTagsToStringSet(ProfileFixtures.심규_직무_태그.get()), ProfileFixtures.심규_매칭_신청_여부),
+                        tuple(MemberFixtures.혜린_이름, ProfileFixtures.혜린_대학, ProfileFixtures.혜린_전공, ProfileFixtures.혜린_이미지_주소, jobTagsToStringSet(ProfileFixtures.혜린_직무_태그.get()), ProfileFixtures.혜린_매칭_신청_여부),
+                        tuple(MemberFixtures.정우_이름, ProfileFixtures.정우_대학, ProfileFixtures.정우_전공, ProfileFixtures.정우_이미지_주소, jobTagsToStringSet(ProfileFixtures.정우_직무_태그.get()), ProfileFixtures.정우_매칭_신청_여부)
                 );
     }
 
@@ -89,13 +89,13 @@ public class SearchingMemberServiceTest {
     @Test
     void findMoreThanTenMember() {
         // given
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 11; i++) {
             Member dummy = Member.builder().email(new Email("dummy" + i + "@naver.com")).profile(Profile.create()).build();
             memberRepository.save(dummy);
         }
 
         // when
-        MembersResponse response = searchingMemberService.getMembers(0);
+        MembersResponse response = searchingMemberService.getMembers(0L);
 
         // then
         assertThat(response.isHasNext()).isTrue();
