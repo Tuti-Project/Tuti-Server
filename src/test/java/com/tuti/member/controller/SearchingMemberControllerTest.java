@@ -1,4 +1,4 @@
-package com.tuti.member.domain.controller;
+package com.tuti.member.controller;
 
 
 import com.tuti.common.ControllerTest;

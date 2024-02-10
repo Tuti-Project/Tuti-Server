@@ -1,4 +1,4 @@
-package com.tuti.member.domain.service;
+package com.tuti.member.service;
 
 import com.tuti.common.RepositoryTest;
 import com.tuti.fixtures.MemberFixtures;
