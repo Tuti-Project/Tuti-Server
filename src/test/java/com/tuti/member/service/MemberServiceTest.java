@@ -78,14 +78,10 @@ public class MemberServiceTest {
         memberService.updateMyPage(member.getId(), request);
 
         // then
-        assertThat(member)
-                .extracting("applyMatchingStatus", "matchingDescription", "availableHours", "attachedJobTags", "attachedSkillTags", "availableDays")
-                .containsExactly(ApplyMatchingStatus.ON, "", "09:00 - 18:00", new AttachedJobTags(Set.of(new AttachedJobTag("IT/SW"), new AttachedJobTag("사무/행정"))),
-                        new AttachedSkillTags(Set.of(new AttachedSkillTag("한글/워드"), new AttachedSkillTag("엑셀"))), new AvailableDays(Set.of(DayOfWeek.MON, DayOfWeek.TUE, DayOfWeek.WED)));
-
         assertThat(member.getProfile())
-                .extracting("university", "major", "imageUrl", "description")
-                .containsExactly("단국대학교", "소프트웨어학과", "image-uri", "개발쪽 업무를 희망합니다");
+                .extracting("university", "major", "imageUrl", "description", "applyMatchingStatus", "matchingDescription", "availableHours", "attachedJobTags", "attachedSkillTags", "availableDays")
+                .containsExactly("단국대학교", "소프트웨어학과", "image-uri", "개발쪽 업무를 희망합니다", ApplyMatchingStatus.ON, "", "09:00 - 18:00", new AttachedJobTags(Set.of(new AttachedJobTag("IT/SW"), new AttachedJobTag("사무/행정"))),
+                        new AttachedSkillTags(Set.of(new AttachedSkillTag("한글/워드"), new AttachedSkillTag("엑셀"))), new AvailableDays(Set.of(DayOfWeek.MON, DayOfWeek.TUE, DayOfWeek.WED)));
     }
 
 }
