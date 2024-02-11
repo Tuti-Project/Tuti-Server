@@ -26,6 +26,7 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final JwtTokenProvider tokenProvider;
     private final OAuthProvider oAuthProvider;
+    private final WebClient webClient;
 
     @Transactional
     public AccessTokenResponse oAuthLogin(String providerName, String oAuthAccessToken) {
@@ -49,7 +50,7 @@ public class AuthService {
         return new AccessTokenResponse(tokenProvider.createAccessToken(member.getId()));
     }
 
-    private Member saveOrLogin(OAuthUserProfile oAuthUserProfile) {
+    public Member saveOrLogin(OAuthUserProfile oAuthUserProfile) {
         Optional<Member> member = memberRepository.findByEmail(new Email(oAuthUserProfile.getEmail()));
         if (member.isEmpty()) {
             return memberRepository.save(oAuthUserProfile.toMember());
@@ -57,14 +58,13 @@ public class AuthService {
         return member.get();
     }
 
-    private OAuthUserProfile getUserProfile(String providerName, String oAuthAccessToken, String userInfoUri) {
+    public OAuthUserProfile getUserProfile(String providerName, String oAuthAccessToken, String userInfoUri) {
         Map<String, Object> OAuthUserAttributes = getUserAttributes(userInfoUri, oAuthAccessToken);
         return OAuthAttributes.extract(providerName, OAuthUserAttributes);
     }
 
-    private Map<String, Object> getUserAttributes(String userInfoUri, String oAuthAccessToken) {
-        return WebClient.create()
-                .get()
+    public Map<String, Object> getUserAttributes(String userInfoUri, String oAuthAccessToken) {
+        return webClient.get()
                 .uri(userInfoUri)
                 .headers(header -> header.setBearerAuth(oAuthAccessToken))
                 .retrieve()

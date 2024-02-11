@@ -19,8 +19,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
         final String token = AuthenticationExtractor.extract(request);
         validateToken(token);
-
-        request.setAttribute("payload", token);
         return true;
     }
 

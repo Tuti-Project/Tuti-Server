@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
 
+import com.tuti.auth.controller.interceptor.AuthenticationInterceptor;
 import com.tuti.auth.infrastructure.JwtTokenProvider;
 import com.tuti.auth.infrastructure.OAuthProvider;
 import com.tuti.fixtures.MemberFixtures;
@@ -29,8 +30,11 @@ public abstract class ControllerTest {
     @Autowired
     protected ObjectMapper objectMapper;
 
+    @Autowired
+    protected AuthenticationInterceptor authenticationInterceptor;
+
     @MockBean
-    private MemberRepository memberRepository;
+    protected MemberRepository memberRepository;
 
     @MockBean
     protected HttpServletRequest httpServletRequest;
