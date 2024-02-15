@@ -21,34 +21,11 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public void joinStudent(StudentJoinRequest studentJoinRequest) {
-        Member member = Member.builder()
-                .email(new Email(studentJoinRequest.getEmail()))
-                .name(studentJoinRequest.getName())
-                .password(studentJoinRequest.getPassword())
-                .birthYear(studentJoinRequest.getBirthYear())
-                .birthDay(studentJoinRequest.getBirthDay())
-                .gender(Gender.of(studentJoinRequest.getGender()))
-                .role(Role.STUDENT)
-                .profile(Profile.create())
-                .businessNumber(BLANK)
-                .build();
-
-        memberRepository.save(member);
+        memberRepository.save(Member.createStudentMember(studentJoinRequest));
     }
 
     public void joinEnterprise(EnterpriseJoinRequest enterpriseJoinRequest) {
-        Member member = Member.builder()
-                .email(new Email(enterpriseJoinRequest.getEmail()))
-                .name(enterpriseJoinRequest.getName())
-                .password(enterpriseJoinRequest.getPassword())
-                .birthYear(enterpriseJoinRequest.getBirthYear())
-                .birthDay(enterpriseJoinRequest.getBirthDay())
-                .gender(Gender.of(enterpriseJoinRequest.getGender()))
-                .role(Role.ENTERPRISE)
-                .businessNumber(enterpriseJoinRequest.getBusinessNumber())
-                .build();
-
-        memberRepository.save(member);
+        memberRepository.save(Member.createEnterpriseMember(enterpriseJoinRequest));
     }
 
     public void updateMyPage(Long memberId, UpdateMyPageRequest updateMyPageRequest) {

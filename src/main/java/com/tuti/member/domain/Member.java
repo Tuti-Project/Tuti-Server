@@ -2,12 +2,16 @@ package com.tuti.member.domain;
 
 import com.tuti.common.entity.BaseEntity;
 import com.tuti.member.domain.vo.*;
+import com.tuti.member.service.request.EnterpriseJoinRequest;
+import com.tuti.member.service.request.StudentJoinRequest;
 import com.tuti.member.service.request.UpdateMyPageRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import static com.tuti.member.domain.vo.Profile.BLANK;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -47,6 +51,33 @@ public class Member extends BaseEntity {
         this.birthYear = birthYear;
         this.birthDay = birthDay;
         this.businessNumber = businessNumber;
+    }
+
+    public static Member createStudentMember(StudentJoinRequest studentJoinRequest) {
+        return Member.builder()
+                .email(new Email(studentJoinRequest.getEmail()))
+                .name(studentJoinRequest.getName())
+                .password(studentJoinRequest.getPassword())
+                .birthYear(studentJoinRequest.getBirthYear())
+                .birthDay(studentJoinRequest.getBirthDay())
+                .gender(Gender.of(studentJoinRequest.getGender()))
+                .role(Role.STUDENT)
+                .profile(Profile.create())
+                .businessNumber(BLANK)
+                .build();
+    }
+
+    public static Member createEnterpriseMember(EnterpriseJoinRequest enterpriseJoinRequest) {
+        return Member.builder()
+                .email(new Email(enterpriseJoinRequest.getEmail()))
+                .name(enterpriseJoinRequest.getName())
+                .password(enterpriseJoinRequest.getPassword())
+                .birthYear(enterpriseJoinRequest.getBirthYear())
+                .birthDay(enterpriseJoinRequest.getBirthDay())
+                .gender(Gender.of(enterpriseJoinRequest.getGender()))
+                .role(Role.ENTERPRISE)
+                .businessNumber(enterpriseJoinRequest.getBusinessNumber())
+                .build();
     }
 
     public void updateProfile(UpdateMyPageRequest updateMyPageRequest) {

@@ -20,21 +20,15 @@ public class SearchingMemberService {
 
     public MembersResponse getMembers(Long lastMemberId) {
         int pageSize = 10;
-        lastMemberId = isFirstPage(lastMemberId) ? Long.MAX_VALUE : lastMemberId;
+
+        lastMemberId = getLastMemberId(lastMemberId);
 
         List<Member> members = memberRepository.findMemberWithPaging(lastMemberId, pageSize + 1);
-        boolean hasNext = false;
-
-        if (!isLastPage(members.size(), pageSize)) {
-            members.remove(pageSize);
-            hasNext = true;
-        }
 
         return MembersResponse.builder()
                 .last(members.get(members.size() - 1).getId())
                 .members(members)
-                .hasNext(hasNext)
-                .build();
+                .hasNext(isHasNext(members, pageSize)).build();
     }
 
     public MemberDetailResponse getMember(Long memberId) {
@@ -44,12 +38,16 @@ public class SearchingMemberService {
         return new MemberDetailResponse(member);
     }
 
-    private boolean isLastPage(int memberSize, int pageSize) {
-        return (memberSize < pageSize) ? true : false;
+    private boolean isHasNext(List<Member> members, int pageSize) {
+        if (members.size() > pageSize) {
+            members.remove(pageSize);
+            return true;
+        }
+        return false;
     }
 
-    private boolean isFirstPage(Long lastMemberId) {
-        return (lastMemberId == 0) ? true : false;
+    private Long getLastMemberId(Long lastMemberId) {
+        return (lastMemberId == 0) ? Long.MAX_VALUE : lastMemberId;
     }
 
 }
