@@ -15,7 +15,7 @@ import java.util.Arrays;
 @OpenAPIDefinition(
         info = @Info(title = "트티 API 명세서",
                 version = "v1"),
-        servers = {@Server(url = "https://www.tuti-service.site/", description = "Dev"),
+        servers = {@Server(url = "https://52.78.238.81:8080/", description = "Dev"),
                    @Server(url = "http://localhost:8080/", description = "Local")})
 @Configuration
 public class SwaggerConfig {
