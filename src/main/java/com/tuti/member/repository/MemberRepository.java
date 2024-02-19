@@ -1,4 +1,4 @@
-package com.tuti.member.domain.repository;
+package com.tuti.member.repository;
 
 import com.tuti.member.domain.Member;
 import com.tuti.member.domain.vo.Email;
@@ -22,4 +22,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "WHERE m.id = :id")
     Optional<Member> findByIdFetch(@Param("id") Long id);
 
+    Boolean existsByEmail(Email email);
 }

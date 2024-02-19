@@ -3,7 +3,7 @@ package com.tuti.member.domain.respository;
 import com.tuti.common.RepositoryTest;
 import com.tuti.fixtures.MemberFixtures;
 import com.tuti.member.domain.Member;
-import com.tuti.member.domain.repository.MemberRepository;
+import com.tuti.member.repository.MemberRepository;
 import com.tuti.member.domain.vo.ApplyMatchingStatus;
 import com.tuti.member.domain.vo.Email;
 import com.tuti.member.service.request.UpdateMyPageRequest;

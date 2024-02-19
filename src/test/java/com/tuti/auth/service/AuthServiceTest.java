@@ -10,7 +10,7 @@ import com.tuti.auth.service.response.AccessTokenResponse;
 import com.tuti.auth.service.response.OAuthUserProfile;
 import com.tuti.common.RepositoryTest;
 import com.tuti.fixtures.MemberFixtures;
-import com.tuti.member.domain.repository.MemberRepository;
+import com.tuti.member.repository.MemberRepository;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.assertj.core.api.Assertions;

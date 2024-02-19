@@ -1,7 +1,7 @@
 package com.tuti.member.service;
 
 import com.tuti.member.domain.Member;
-import com.tuti.member.domain.repository.MemberRepository;
+import com.tuti.member.repository.MemberRepository;
 import com.tuti.member.service.exception.MemberNotFoundException;
 import com.tuti.member.service.response.MemberDetailResponse;
 import com.tuti.member.service.response.MembersResponse;

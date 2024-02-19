@@ -2,8 +2,8 @@ package com.tuti.tag.service;
 
 import com.tuti.tag.domain.JobTag;
 import com.tuti.tag.domain.SkillTag;
-import com.tuti.tag.domain.repository.JobTagRepository;
-import com.tuti.tag.domain.repository.SkillTagRepository;
+import com.tuti.tag.repository.JobTagRepository;
+import com.tuti.tag.repository.SkillTagRepository;
 import com.tuti.tag.service.response.JobTagResponse;
 import com.tuti.tag.service.response.SkillTagResponse;
 import lombok.RequiredArgsConstructor;

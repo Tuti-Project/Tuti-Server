@@ -1,4 +1,4 @@
-package com.tuti.tag.domain.repository;
+package com.tuti.tag.repository;
 
 import com.tuti.tag.domain.JobTag;
 import org.springframework.data.jpa.repository.JpaRepository;

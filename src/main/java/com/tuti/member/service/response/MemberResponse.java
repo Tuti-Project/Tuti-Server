@@ -9,7 +9,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 @Getter
-public class MemberSimpleResponse {
+public class MemberResponse {
     private Long memberId;
     private String name;
     private String university;
@@ -26,7 +25,7 @@ public class MemberSimpleResponse {
     private ApplyMatchingStatus applyMatchingStatus;
     private Set<String> jobTags;
 
-    public MemberSimpleResponse(Member member) {
+    public MemberResponse(Member member) {
         Profile profile = member.getProfile();
         this.memberId = member.getId();
         this.name = member.getName();

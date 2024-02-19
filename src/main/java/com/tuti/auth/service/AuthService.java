@@ -8,7 +8,7 @@ import com.tuti.auth.service.request.LoginRequest;
 import com.tuti.auth.service.response.AccessTokenResponse;
 import com.tuti.auth.service.response.OAuthUserProfile;
 import com.tuti.member.domain.Member;
-import com.tuti.member.domain.repository.MemberRepository;
+import com.tuti.member.repository.MemberRepository;
 import com.tuti.member.domain.vo.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;

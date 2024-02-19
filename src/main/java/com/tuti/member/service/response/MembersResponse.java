@@ -11,13 +11,13 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Getter
 public class MembersResponse {
-    private List<MemberSimpleResponse> members;
+    private List<MemberResponse> members;
     private boolean hasNext;
     private Long last;
 
     @Builder
     public MembersResponse(List<Member> members, boolean hasNext, Long last) {
-        this.members = members.stream().map(m -> new MemberSimpleResponse(m)).collect(Collectors.toList());
+        this.members = members.stream().map(m -> new MemberResponse(m)).collect(Collectors.toList());
         this.hasNext = hasNext;
         this.last = last;
     }

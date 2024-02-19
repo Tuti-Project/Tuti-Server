@@ -10,7 +10,7 @@ import com.tuti.auth.controller.interceptor.AuthenticationInterceptor;
 import com.tuti.auth.infrastructure.JwtTokenProvider;
 import com.tuti.auth.infrastructure.OAuthProvider;
 import com.tuti.fixtures.MemberFixtures;
-import com.tuti.member.domain.repository.MemberRepository;
+import com.tuti.member.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
