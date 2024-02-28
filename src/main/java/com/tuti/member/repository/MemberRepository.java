@@ -2,6 +2,7 @@ package com.tuti.member.repository;
 
 import com.tuti.member.domain.Member;
 import com.tuti.member.domain.vo.Email;
+import com.tuti.member.domain.vo.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +24,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByIdFetch(@Param("id") Long id);
 
     Boolean existsByEmail(Email email);
+
+    @Query("SELECT COUNT(m) FROM Member m WHERE m.role = :role AND m.createdDate = CURRENT_DATE")
+    Long countJoinedToday(Role role);
 }

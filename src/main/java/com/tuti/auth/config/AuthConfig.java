@@ -2,7 +2,7 @@ package com.tuti.auth.config;
 
 import com.tuti.auth.controller.interceptor.AuthenticatedMemberResolver;
 import com.tuti.auth.controller.interceptor.AuthenticationInterceptor;
-import com.tuti.auth.infrastructure.JwtTokenProvider;
+import com.tuti.log.controller.interceptor.VisitorInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +20,7 @@ public class AuthConfig implements WebMvcConfigurer {
 
     private final AuthenticatedMemberResolver authenticatedMemberResolver;
     private final AuthenticationInterceptor authenticationInterceptor;
+    private final VisitorInterceptor visitorInterceptor;
 
     @Bean
     public WebClient webClient() {
@@ -44,7 +45,10 @@ public class AuthConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(authenticationInterceptor)
-                .order(1)
-                .addPathPatterns("test");
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login", "/home", "/join", "/join/**");
+
+        registry.addInterceptor(visitorInterceptor)
+                .addPathPatterns("/**");
     }
 }
