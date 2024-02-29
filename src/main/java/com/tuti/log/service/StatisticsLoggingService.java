@@ -57,7 +57,7 @@ public class StatisticsLoggingService {
 
     @Scheduled(cron = "0 59 23 * * *")
     @Transactional
-    public void updateNumberOfJoinAsStudentPerDate() {
+    public void updateNumberOfJoinPerDate() {
         Long student = memberRepository.countJoinedToday(Role.STUDENT);
         Long enterprise = memberRepository.countJoinedToday(Role.ENTERPRISE);
 
