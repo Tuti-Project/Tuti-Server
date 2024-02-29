@@ -41,11 +41,11 @@ public class AuthConfig implements WebMvcConfigurer {
                 .allowCredentials(true);
     }
 
-
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(authenticationInterceptor)
-                .excludePathPatterns("/login", "/home", "/join", "/join/**")
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login/**", "/home", "/join/**", "/product/**", "/products")
                 .excludePathPatterns("/v3/**", "/swagger-ui/**");
 
         registry.addInterceptor(visitorInterceptor)
