@@ -28,7 +28,7 @@ public class StatisticsLoggingService {
     private final MemberRepository memberRepository;
     private final JoinCountRepository joinCountRepository;
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "30 59 23 * * *")
     @Transactional
     public void updateNumberOfVisitorPerDate() {
         Set<String> keys = redisTemplate.keys("*_*");
@@ -58,12 +58,13 @@ public class StatisticsLoggingService {
     @Scheduled(cron = "0 59 23 * * *")
     @Transactional
     public void updateNumberOfJoinPerDate() {
-        Long student = memberRepository.countJoinedToday(Role.STUDENT);
-        Long enterprise = memberRepository.countJoinedToday(Role.ENTERPRISE);
+        Long student = memberRepository.countJoinedToday(Role.STUDENT, LocalDate.now());
+        Long enterprise = memberRepository.countJoinedToday(Role.ENTERPRISE, LocalDate.now());
 
         joinCountRepository.save(JoinCount.builder()
                 .student(student)
                 .enterprise(enterprise)
+                .date(LocalDate.now())
                 .build());
     }
 

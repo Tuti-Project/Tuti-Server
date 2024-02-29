@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Boolean existsByEmail(Email email);
 
-    @Query("SELECT COUNT(m) FROM Member m WHERE m.role = :role AND m.createdDate = CURRENT_DATE")
-    Long countJoinedToday(Role role);
+    @Query("SELECT COUNT(m) FROM Member m WHERE m.role = :role AND " +
+            "FUNCTION('DATE_FORMAT', m.createdDate, '%Y-%m-%d') = FUNCTION('DATE_FORMAT', :currentDate, '%Y-%m-%d')")
+    Long countJoinedToday(@Param("role") Role role, @Param("currentDate") LocalDate currentDate);
 }
