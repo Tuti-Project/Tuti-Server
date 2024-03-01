@@ -6,10 +6,12 @@ import com.tuti.member.service.exception.MemberNotFoundException;
 import com.tuti.member.service.response.MemberDetailResponse;
 import com.tuti.member.service.response.MembersResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -17,6 +19,7 @@ import java.util.List;
 public class SearchingMemberService {
 
     private final MemberRepository memberRepository;
+    private final RedisTemplate<String, String> redisTemplate;
 
     public MembersResponse getMembers(Long lastMemberId) {
         int pageSize = 10;
@@ -31,11 +34,28 @@ public class SearchingMemberService {
                 .hasNext(isHasNext(members, pageSize)).build();
     }
 
-    public MemberDetailResponse getMember(Long memberId) {
-        Member member = memberRepository.findByIdFetch(memberId)
+    public MemberDetailResponse getMyPage(Long memberId) {
+        Member findMember = memberRepository.findByIdFetch(memberId)
                 .orElseThrow(MemberNotFoundException::new);
 
-        return new MemberDetailResponse(member);
+        return new MemberDetailResponse(findMember);
+    }
+
+    public MemberDetailResponse getMember(Long loginMemberId, Long findMemberId) {
+        Member findMember = memberRepository.findByIdFetch(findMemberId)
+                .orElseThrow(MemberNotFoundException::new);
+
+        recordViewCount(loginMemberId, findMemberId);
+
+        return new MemberDetailResponse(findMember);
+    }
+
+    public void recordViewCount(Long loginMemberId, Long findMemberId) {
+        ValueOperations<String, String> operations = redisTemplate.opsForValue();
+        String value = findMemberId + "&" + loginMemberId;
+        if (!operations.getOperations().hasKey(value)) {
+            operations.set(value, "");
+        }
     }
 
     private boolean isHasNext(List<Member> members, int pageSize) {

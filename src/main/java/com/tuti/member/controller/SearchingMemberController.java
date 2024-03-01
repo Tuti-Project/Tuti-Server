@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,13 +30,13 @@ public class SearchingMemberController {
     @Operation(summary = "마이페이지 정보", description = "마이페이지 정보를 가져온다")
     @GetMapping("/my-page")
     public ApiResponse<MemberDetailResponse> getMyPage(@Parameter(hidden = true) @AuthenticatedMemberId Long memberId) {
-        return ApiResponse.ok(searchingMemberService.getMember(memberId));
+        return ApiResponse.ok(searchingMemberService.getMyPage(memberId));
     }
 
     @Operation(summary = "유저 상세 페이지", description = "유저 상세 페이지 정보를 가져온다")
     @GetMapping("/member/{memberId}")
-    public ApiResponse<MemberDetailResponse> getMember(@AuthenticatedMemberId Long memberId, @RequestParam("memberId") Long findMemberId) {
-        return ApiResponse.ok(searchingMemberService.getMember(findMemberId));
+    public ApiResponse<MemberDetailResponse> getMember(@Parameter(hidden = true) @AuthenticatedMemberId Long memberId, @PathVariable("memberId") Long findMemberId) {
+        return ApiResponse.ok(searchingMemberService.getMember(memberId, findMemberId));
     }
 
 }

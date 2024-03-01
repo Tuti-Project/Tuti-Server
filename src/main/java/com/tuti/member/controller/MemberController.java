@@ -41,4 +41,5 @@ public class MemberController {
         memberService.updateMyPage(memberId, updateMyPageRequest);
         return ApiResponse.ok();
     }
+
 }
