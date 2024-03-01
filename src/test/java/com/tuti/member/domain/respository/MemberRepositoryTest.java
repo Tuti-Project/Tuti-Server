@@ -3,6 +3,7 @@ package com.tuti.member.domain.respository;
 import com.tuti.common.RepositoryTest;
 import com.tuti.fixtures.MemberFixtures;
 import com.tuti.member.domain.Member;
+import com.tuti.member.domain.vo.Profile;
 import com.tuti.member.repository.MemberRepository;
 import com.tuti.member.domain.vo.ApplyMatchingStatus;
 import com.tuti.member.domain.vo.Email;
@@ -72,7 +73,8 @@ public class MemberRepositoryTest {
         UpdateMyPageRequest updateRequest = createUpdateRequest("단국대학교", "소프트웨어학과", "image-uri");
 
         // when
-        member.updateProfile(updateRequest);
+        Profile profile = member.getProfile();
+        profile.update(updateRequest);
 
         // then
         assertThat(member.getProfile())

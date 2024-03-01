@@ -2,7 +2,6 @@ package com.tuti.member.controller;
 
 
 import com.tuti.common.ControllerTest;
-import com.tuti.member.controller.SearchingMemberController;
 import com.tuti.member.service.SearchingMemberService;
 import com.tuti.member.service.exception.MemberNotFoundException;
 import com.tuti.member.service.response.MemberDetailResponse;
@@ -46,7 +45,7 @@ public class SearchingMemberControllerTest extends ControllerTest {
     void notExistMember() throws Exception {
         // given
         String accessToken = jwtTokenProvider.createAccessToken(999L);
-        given(searchingMemberService.getMember(any())).willThrow(new MemberNotFoundException());
+        given(searchingMemberService.getMyPage(any())).willThrow(new MemberNotFoundException());
 
         // when, then
         mockMvc.perform(get("/my-page")
@@ -75,7 +74,7 @@ public class SearchingMemberControllerTest extends ControllerTest {
         // given
         String accessToken = jwtTokenProvider.createAccessToken(1L);
 
-        when(searchingMemberService.getMember(any())).thenReturn(MemberDetailResponse.builder().build());
+        when(searchingMemberService.getMember(any(), any())).thenReturn(MemberDetailResponse.builder().build());
 
         // when, then
         mockMvc.perform(get("/member/{memberId}", 1L)

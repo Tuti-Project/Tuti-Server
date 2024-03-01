@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -26,11 +27,14 @@ public class SearchingMemberServiceTest {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     private SearchingMemberService searchingMemberService;
 
     @BeforeEach
     void setUp() {
-        searchingMemberService = new SearchingMemberService(memberRepository);
+        searchingMemberService = new SearchingMemberService(memberRepository, redisTemplate);
 
         memberRepository.save(MemberFixtures.정우());
         memberRepository.save(MemberFixtures.혜린());
@@ -47,7 +51,7 @@ public class SearchingMemberServiceTest {
         Profile profile = member.getProfile();
 
         // when
-        MemberDetailResponse response = searchingMemberService.getMember(member.getId());
+        MemberDetailResponse response = searchingMemberService.getMyPage(member.getId());
 
         // then
         assertAll(
@@ -124,5 +128,17 @@ public class SearchingMemberServiceTest {
         return availableDays.stream()
                 .map(DayOfWeek::toString)
                 .collect(Collectors.toSet());
+    }
+
+    @DisplayName("")
+    @Test
+    void test() {
+        // given
+        Long a = 1L;
+        Long b = 2L;
+        // when
+        System.out.println(a + "&" + b);
+        // then
+
     }
 }

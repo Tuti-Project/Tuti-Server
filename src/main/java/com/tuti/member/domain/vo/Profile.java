@@ -40,9 +40,10 @@ public class Profile {
     @Embedded
     private AvailableDays availableDays;
     private String availableHours;
+    private Long viewCount;
 
     @Builder
-    public Profile(String university, String major, String imageUrl, String description, ApplyMatchingStatus applyMatchingStatus, String matchingDescription, AttachedJobTags attachedJobTags, AttachedSkillTags attachedSkillTags, AvailableDays availableDays, String availableHours) {
+    public Profile(String university, String major, String imageUrl, String description, ApplyMatchingStatus applyMatchingStatus, String matchingDescription, AttachedJobTags attachedJobTags, AttachedSkillTags attachedSkillTags, AvailableDays availableDays, String availableHours, Long viewCount) {
         this.university = university;
         this.major = major;
         this.imageUrl = imageUrl;
@@ -53,6 +54,7 @@ public class Profile {
         this.attachedSkillTags = attachedSkillTags;
         this.availableDays = availableDays;
         this.availableHours = availableHours;
+        this.viewCount = viewCount;
     }
 
     public static Profile create() {
@@ -67,6 +69,7 @@ public class Profile {
                 .attachedJobTags(new AttachedJobTags(Collections.EMPTY_SET))
                 .attachedSkillTags(new AttachedSkillTags(Collections.EMPTY_SET))
                 .availableDays(new AvailableDays(Collections.EMPTY_SET))
+                .viewCount(0l)
                 .build();
     }
 
@@ -87,5 +90,9 @@ public class Profile {
         this.availableDays = new AvailableDays(updateMyPageRequest.getAvailableDays().stream()
                 .map(DayOfWeek::of)
                 .collect(Collectors.toSet()));
+    }
+
+    public void addViewCount(Long viewCount) {
+        this.viewCount += viewCount;
     }
 }

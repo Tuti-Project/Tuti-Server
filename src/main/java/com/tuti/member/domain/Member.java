@@ -49,8 +49,4 @@ public class Member extends BaseEntity {
         this.businessNumber = businessNumber;
     }
 
-    public void updateProfile(UpdateMyPageRequest updateMyPageRequest) {
-        profile.update(updateMyPageRequest);
-    }
-
 }
