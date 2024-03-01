@@ -23,7 +23,7 @@ public class ProductController {
 
     @Operation(summary = "상품 수정")
     @PostMapping("/product/{productId}")
-    public ApiResponse<Void> updateProduct(@AuthenticatedMemberId Long memberId, @PathVariable("productId")Long productId,
+    public ApiResponse<Void> updateProduct(@AuthenticatedMemberId Long memberId, @RequestParam("productId")Long productId,
                                            @RequestBody UpdateProductRequest updateProductRequest) {
         productService.updateProduct(productId, updateProductRequest);
         return ApiResponse.ok();
@@ -31,7 +31,7 @@ public class ProductController {
 
     @Operation(summary = "상품 삭제")
     @DeleteMapping("/product/{productId}")
-    public ApiResponse<Void> deleteProduct(@AuthenticatedMemberId Long memberId, @PathVariable("productId")Long productId) {
+    public ApiResponse<Void> deleteProduct(@AuthenticatedMemberId Long memberId, @RequestParam("productId")Long productId) {
         productService.deleteProduct(productId);
         return ApiResponse.ok();
     }
